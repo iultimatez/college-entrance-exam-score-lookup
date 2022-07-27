@@ -138,8 +138,8 @@ function App() {
     setValidInput(true);
     setScore(totalScore);
     setCombiation(lookUpKey);
-    setTableIndex(totalScore == 0 ? maxScore - 1 : maxScore - totalScore);
-  }, [selectionMap, scoreMap]);
+    setTableIndex(totalScore === 0 ? maxScore - 1 : maxScore - totalScore);
+  }, [selectionMap, scoreMap, subjectMap]);
   return (
     <div className="App">
       <p></p>
@@ -182,6 +182,8 @@ function App() {
                   <input
                     type="text"
                     className="form-control"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     value={scoreMap.get(subject)}
                     onChange={(event) => {
                       setScoreMap(
@@ -199,11 +201,13 @@ function App() {
         {validInput && (
           <div className="row">
             <h3>完整列表</h3>
+            <p>
+              組別：{subjectMap[combination][0].no} 科目名稱：
+              {subjectMap[combination][0].subjects}
+            </p>
             <table className="table">
               <thead>
                 <tr>
-                  <th scope="col">組別</th>
-                  {/* <th scope="col">科目名稱</th> */}
                   <th scope="col">分數區間</th>
                   <th scope="col">人數</th>
                   <th scope="col">百分比</th>
@@ -217,15 +221,13 @@ function App() {
                 {[...subjectMap[combination]]
                   .reverse()
                   .map((subject, index) => {
-                    const isThis = index == tableIndex;
+                    const isThis = index === tableIndex;
                     const rowClassName = isThis ? "table-warning" : undefined;
                     return (
                       <tr
                         className={rowClassName}
                         key={`${subject}-list-row-${index}`}
                       >
-                        <th>{subject.no}</th>
-                        {/* <td>{subject.subjects}</td> */}
                         <td>{subject.score_interval}</td>
                         <td>{subject.count}</td>
                         <td>{subject.percentage}</td>
