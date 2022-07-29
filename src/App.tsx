@@ -34,7 +34,31 @@ function App() {
     "美術(不含美術成績)": 0,
     "音樂(不含音樂成績)": 0,
   };
-  const [scoreMap, setScoreMap] = useState(new Map(Object.entries(scoreObj)));
+  const parseScore = (scoreString: string): number => {
+    const parsed = parseInt(scoreString, 10);
+    if (!parsed) {
+      return 0;
+    }
+    if (parsed > 60) {
+      return 0;
+    }
+    return parsed;
+  };
+  const [scoreMap, setScoreMap] = useState(() => {
+    const saved = localStorage.getItem("scores");
+    const defaultMap = new Map(Object.entries(scoreObj));
+    if (!!saved) {
+      const initialValue = JSON.parse(saved);
+      if (!!initialValue) {
+        Object.keys(scoreObj).forEach((s) => {
+          if (s in initialValue) {
+            defaultMap.set(s, parseScore(initialValue[s]));
+          }
+        });
+      }
+    }
+    return defaultMap;
+  });
   const selectionObj: { [subject: string]: boolean } = {
     國文: false,
     英文: false,
@@ -75,16 +99,6 @@ function App() {
     "美術(不含美術成績)",
     "音樂(不含音樂成績)",
   ];
-  const parseScore = (scoreString: string): number => {
-    const parsed = parseInt(scoreString, 10);
-    if (!parsed) {
-      return 0;
-    }
-    if (parsed > 60) {
-      return 0;
-    }
-    return parsed;
-  };
   const [countInterval, setCountInterval] = useState("");
   const [percentageInterval, setPercentageInterval] = useState("");
   const [score, setScore] = useState(0);
@@ -100,6 +114,13 @@ function App() {
       }
     });
     const lookUpKey = selectedSubjects.sort().join("-");
+    const scoreMapObj: { [subject: string]: number } = {};
+    scoreMap.forEach((sc, sub) => {
+      scoreMapObj[sub] = sc;
+    });
+    // console.log(scoreMapObj);
+    // console.log();
+    localStorage.setItem("scores", JSON.stringify(scoreMapObj));
     // console.log(lookUpKey);
     const scoreList = subjectMap[lookUpKey];
     if (!scoreList) {
