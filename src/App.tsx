@@ -174,7 +174,7 @@ function App() {
           </div>
         ) : (
           <div className="row">
-            <h3>請輸入成績</h3>
+            <h3>請輸入成績並勾選科目，如果有對應的組合，結果將會自動出現</h3>
           </div>
         )}
         <div className="inputs">
@@ -264,6 +264,7 @@ function App() {
           </div>
         )}
       </div>
+      資料來源：
       <a
         className="App-link"
         href="https://www.uac.edu.tw/"
