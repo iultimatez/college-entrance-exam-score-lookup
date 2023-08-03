@@ -164,7 +164,7 @@ function App() {
   return (
     <div className="App">
       <p></p>
-      <h1>分科測驗落點查詢</h1>
+      <h1>分科測驗落點查詢(112學年度)</h1>
       <div className="container-sm text-center">
         {validInput ? (
           <div className="row">
