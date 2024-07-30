@@ -14,14 +14,12 @@
 }
 
 .App-header {
-  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  /* color: white; */
 }
 
 .App-link {
@@ -36,6 +34,12 @@
 
 .individual-input {
   width: 275px;
+}
+
+thead {
+  background: white;
+  position: sticky;
+  top: 0; /* Don't forget this, required for the stickiness */
 }
 
 @keyframes App-logo-spin {

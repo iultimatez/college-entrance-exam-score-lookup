@@ -118,38 +118,24 @@ function App() {
     scoreMap.forEach((sc, sub) => {
       scoreMapObj[sub] = sc;
     });
-    // console.log(scoreMapObj);
-    // console.log();
+
     localStorage.setItem("scores", JSON.stringify(scoreMapObj));
-    // console.log(lookUpKey);
     const scoreList = subjectMap[lookUpKey];
     if (!scoreList) {
       setValidInput(false);
       return;
     }
-    // console.log(scoreList.length);
     const maxScore = scoreList.length;
     if (totalScore > maxScore || totalScore < 0) {
-      // console.log("ERROR");
       setValidInput(false);
       return;
     }
-    // console.log(maxScore);
     const currentInterval =
       totalScore < 1 ? scoreList[totalScore] : scoreList[totalScore - 1];
     const prevInterval =
       totalScore >= maxScore
         ? scoreList[totalScore - 1]
         : scoreList[totalScore];
-    // console.log(`Score: ${totalScore}`);
-    // console.log(
-    //   `名次區間: ${prevInterval.accu_count_desc} - ${currentInterval.accu_count_desc}`
-    // );
-    // console.log(
-    //   `百分比區間: ${prevInterval.accu_percentage_desc} - ${currentInterval.accu_percentage_desc}`
-    // );
-    // console.log(prevInterval);
-    // console.log(currentInterval);
     setCountInterval(
       `${prevInterval.accu_count_desc} - ${currentInterval.accu_count_desc}`
     );
@@ -164,7 +150,10 @@ function App() {
   return (
     <div className="App">
       <p></p>
-      <h1>分科測驗落點查詢(112學年度)</h1>
+      <h1>
+        分科測驗落點查詢{" "}
+        <span className="badge text-bg-secondary">113學年度</span>
+      </h1>
       <div className="container-sm text-center">
         {validInput ? (
           <div className="row">
